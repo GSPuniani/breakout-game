@@ -172,10 +172,17 @@ function keyUpHandler(e) {
     leftPressed = false;
   }
 }
+function mouseMoveHandler(e) {
+  const relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
+  }
+}
 
-// Event listeners for left and right controls
+// Event listeners for left and right controls (arrow keys or mouse movements)
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
+document.addEventListener('mousemove', mouseMoveHandler, false);
 
 // The draw() function will be executed in the function call below every 10 milliseconds
 const interval = setInterval(draw, 10);
