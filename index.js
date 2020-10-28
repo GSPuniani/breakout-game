@@ -22,7 +22,7 @@ let rightPressed = false;
 let leftPressed = false;
 
 // Define variables for the bricks and the overall layout
-const brickRowCount = 3;
+const brickRowCount = 4;
 const brickColumnCount = 5;
 const brickWidth = 75;
 const brickHeight = 20;
@@ -55,9 +55,17 @@ function collisionDetection() {
         if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
           dy = -dy;
           b.status = 0;
-          score += 1;
+          if (r === 0) {
+            score += 40;
+          } else if (r === 1) {
+            score += 30;
+          } else if (r === 2) {
+            score += 20;
+          } else if (r === 3) {
+            score += 10;
+          }
           // Print a message if the user wins and then reset the game
-          if (score === brickRowCount * brickColumnCount) {
+          if (score === 500) {
             alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
           }
@@ -70,14 +78,14 @@ function collisionDetection() {
 // Display the score
 function drawScore() {
   ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = 'blue';
   ctx.fillText(`Score: ${score}`, 8, 20);
 }
 
 // Display the number of lives remaining
 function drawLives() {
   ctx.font = '16px Arial';
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = 'red';
   ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 
@@ -85,21 +93,21 @@ function drawLives() {
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = 'green';
   ctx.fill();
   ctx.closePath();
 }
 
-// Draw the paddle as a blue rectangle
+// Draw the paddle as a rectangle
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = '#0095DD';
+  ctx.fillStyle = 'purple';
   ctx.fill();
   ctx.closePath();
 }
 
-// Draw each brick as a blue rectangle by iterating through a 2-D array of their positions
+// Draw each brick as a rectangle by iterating through a 2-D array of their positions
 function drawBricks() {
   for (let c = 0; c < brickColumnCount; c += 1) {
     for (let r = 0; r < brickRowCount; r += 1) {
@@ -111,7 +119,11 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         ctx.beginPath();
         ctx.rect(brickX, brickY, brickWidth, brickHeight);
-        ctx.fillStyle = '#0095DD';
+        if (r % 2 === 0) {
+          ctx.fillStyle = 'orange';
+        } else {
+          ctx.fillStyle = 'black';
+        }
         ctx.fill();
         ctx.closePath();
       }
