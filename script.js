@@ -21,6 +21,24 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
 
+// Define variables for the bricks and the overall layout
+const brickRowCount = 3;
+const brickColumnCount = 5;
+const brickWidth = 75;
+const brickHeight = 20;
+const brickPadding = 10;
+const brickOffsetTop = 30;
+const brickOffsetLeft = 30;
+
+// Create the brick objects with a 2-D array
+const bricks = [];
+for (let c = 0; c < brickColumnCount; c += 1) {
+  bricks[c] = [];
+  for (let r = 0; r < brickRowCount; r += 1) {
+    bricks[c][r] = { x: 0, y: 0 };
+  }
+}
+
 // Draw the ball as a filled-in circle
 function drawBall() {
   ctx.beginPath();
@@ -30,6 +48,7 @@ function drawBall() {
   ctx.closePath();
 }
 
+// Draw the paddle as a blue rectangle
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
@@ -38,11 +57,29 @@ function drawPaddle() {
   ctx.closePath();
 }
 
+// Draw each brick as a blue rectangle by iterating through a 2-D array of their positions
+function drawBricks() {
+  for (let c = 0; c < brickColumnCount; c += 1) {
+    for (let r = 0; r < brickRowCount; r += 1) {
+      const brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+      const brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+      bricks[c][r].x = brickX;
+      bricks[c][r].y = brickY;
+      ctx.beginPath();
+      ctx.rect(brickX, brickY, brickWidth, brickHeight);
+      ctx.fillStyle = '#0095DD';
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+}
+
 function draw() {
   // Clear the canvas to remove the previous drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw the ball and paddle
+  // Draw the bricks, ball, and paddle
+  drawBricks();
   drawBall();
   drawPaddle();
 
