@@ -30,6 +30,9 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
+// Create a variable to track the score, which is incremented with each ball-brick collision
+let score = 0;
+
 // Create the brick objects with a 2-D array
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c += 1) {
@@ -49,10 +52,24 @@ function collisionDetection() {
         if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
           dy = -dy;
           b.status = 0;
+          score += 1;
+          // Print a message if the user wins and then reset the game
+          if (score === brickRowCount * brickColumnCount) {
+            alert("YOU WIN, CONGRATULATIONS!");
+            document.location.reload();
+            clearInterval(interval); // Needed for Chrome to end game
+          }
         }
       }
     }
   }
+}
+
+// Display the score
+function drawScore() {
+  ctx.font = '16px Arial';
+  ctx.fillStyle = '#0095DD';
+  ctx.fillText(`Score: ${score}`, 8, 20);
 }
 
 // Draw the ball as a filled-in circle
@@ -97,10 +114,11 @@ function draw() {
   // Clear the canvas to remove the previous drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw the bricks, ball, and paddle
+  // Draw the bricks, ball, and paddle and display the score
   drawBricks();
   drawBall();
   drawPaddle();
+  drawScore();
 
   // Check for collisions between the ball and the bricks
   collisionDetection();
