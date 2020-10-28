@@ -33,6 +33,9 @@ const brickOffsetLeft = 30;
 // Create a variable to track the score, which is incremented with each ball-brick collision
 let score = 0;
 
+// Create a variable for lives
+let lives = 3;
+
 // Create the brick objects with a 2-D array
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c += 1) {
@@ -55,9 +58,8 @@ function collisionDetection() {
           score += 1;
           // Print a message if the user wins and then reset the game
           if (score === brickRowCount * brickColumnCount) {
-            alert("YOU WIN, CONGRATULATIONS!");
+            alert('YOU WIN, CONGRATULATIONS!');
             document.location.reload();
-            clearInterval(interval); // Needed for Chrome to end game
           }
         }
       }
@@ -70,6 +72,13 @@ function drawScore() {
   ctx.font = '16px Arial';
   ctx.fillStyle = '#0095DD';
   ctx.fillText(`Score: ${score}`, 8, 20);
+}
+
+// Display the number of lives remaining
+function drawLives() {
+  ctx.font = '16px Arial';
+  ctx.fillStyle = '#0095DD';
+  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 
 // Draw the ball as a filled-in circle
@@ -114,11 +123,12 @@ function draw() {
   // Clear the canvas to remove the previous drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw the bricks, ball, and paddle and display the score
+  // Draw the bricks, ball, and paddle and display the score and the number of lives remaining
   drawBricks();
   drawBall();
   drawPaddle();
   drawScore();
+  drawLives();
 
   // Check for collisions between the ball and the bricks
   collisionDetection();
@@ -137,9 +147,18 @@ function draw() {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
     } else {
-      alert('GAME OVER');
-      document.location.reload();
-      clearInterval(interval);
+      // Decrement lives counter and reset ball and paddle
+      lives -= 1;
+      if (!lives) {
+        alert('GAME OVER');
+        document.location.reload();
+      } else {
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        dx = 2;
+        dy = -2;
+        paddleX = (canvas.width - paddleWidth) / 2;
+      }
     }
   }
 
@@ -155,6 +174,9 @@ function draw() {
       paddleX = 0;
     }
   }
+
+  // The browser will control the framerate to produce smooth and efficient effects
+  requestAnimationFrame(draw);
 }
 
 // Handler functions for left and right controls
@@ -184,5 +206,5 @@ document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 document.addEventListener('mousemove', mouseMoveHandler, false);
 
-// The draw() function will be executed in the function call below every 10 milliseconds
-const interval = setInterval(draw, 10);
+// Draw the canvas with everything in it
+draw();
