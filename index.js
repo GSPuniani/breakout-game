@@ -1,25 +1,23 @@
+// **************************************************************
+// DOM references
+// **************************************************************
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 
-// Define positions for the ball
-let x = canvas.width / 2;
-let y = canvas.height - 30;
+// **************************************************************
+// Variables
+// **************************************************************
 
-// Define the change in positions applied to the ball
-let dx = 2;
-let dy = -2;
+// --------------------------------------------------------------
+// Constants
+// --------------------------------------------------------------
 
 // Define the radius of the ball for calculations
 const ballRadius = 10;
 
-// Define specifications for the paddle (height, width, and starting position on x-axis)
+// Define height and width for the paddle
 const paddleHeight = 10;
 const paddleWidth = 75;
-let paddleX = (canvas.width - paddleWidth) / 2;
-
-// Define Boolean variables for left and right controls (not pressed at the start of the game)
-let rightPressed = false;
-let leftPressed = false;
 
 // Define variables for the bricks and the overall layout
 const brickRowCount = 4;
@@ -30,13 +28,34 @@ const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
+// --------------------------------------------------------------
+// Variables
+// --------------------------------------------------------------
+
+// Define positions for the ball
+let x = canvas.width / 2;
+let y = canvas.height - 30;
+
+// Define the change in positions applied to the ball
+let dx = 2;
+let dy = -2;
+
+// Define initial position of the paddle (center of the x-axis)
+let paddleX = (canvas.width - paddleWidth) / 2;
+
 // Create a variable to track the score, which is incremented with each ball-brick collision
 let score = 0;
 
 // Create a variable for lives
 let lives = 3;
 
-// Create the brick objects with a 2-D array
+// Define Boolean variables for left and right controls (not pressed at the start of the game)
+let rightPressed = false;
+let leftPressed = false;
+
+// --------------------------------------------------------------
+// Setup Bricks Array
+// --------------------------------------------------------------
 const bricks = [];
 for (let c = 0; c < brickColumnCount; c += 1) {
   bricks[c] = [];
@@ -44,6 +63,10 @@ for (let c = 0; c < brickColumnCount; c += 1) {
     bricks[c][r] = { x: 0, y: 0, status: 1 };
   }
 }
+
+// **************************************************************
+// Functions
+// **************************************************************
 
 // Detect ball-brick collisions by comparing the ball's center with each brick position
 function collisionDetection() {
@@ -131,6 +154,10 @@ function drawBricks() {
   }
 }
 
+// --------------------------------------------------------------
+// Game Loop
+// --------------------------------------------------------------
+
 function draw() {
   // Clear the canvas to remove the previous drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -191,7 +218,9 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
-// Handler functions for left and right controls
+// --------------------------------------------------------------
+// Event Listeners
+// --------------------------------------------------------------
 function keyDownHandler(e) {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
     rightPressed = true;
@@ -213,10 +242,14 @@ function mouseMoveHandler(e) {
   }
 }
 
-// Event listeners for left and right controls (arrow keys or mouse movements)
+// **************************************************************
+// Register Events
+// **************************************************************
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 document.addEventListener('mousemove', mouseMoveHandler, false);
 
-// Draw the canvas with everything in it
+// **************************************************************
+// Starts program entry point
+// **************************************************************
 draw();
