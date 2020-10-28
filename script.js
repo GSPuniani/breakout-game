@@ -54,8 +54,16 @@ function draw() {
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      alert('GAME OVER');
+      document.location.reload();
+      clearInterval(interval);
+    }
   }
 
   // Move the paddle by 7 pixels if left or right control engaged and stop at canvas boundaries
@@ -93,4 +101,4 @@ document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 
 // The draw() function will be executed in the function call below every 10 milliseconds
-setInterval(draw, 10);
+const interval = setInterval(draw, 10);
