@@ -7,4 +7,4 @@ As I followed along with the tutorial, I applied Airbnb's style guide from ESLin
 
 I also completed some stretch challenges, such as: adding an additional row; adding colors to alternating rows (orange and black); changing the colors of the score display, lives display, paddle, and ball; and adding a new scoring system so that each brick in the top row is worth 40 points, each brick in the second row from the top is worth 30 points, each brick in the next row is worth 20 points, and each brick in the bottom row is worth 10 points. 
 
-Additionally, I completed the other stretch challenges related to improving the code quality, such as reorganizing the code.
+Additionally, I completed the other stretch challenges related to improving the code quality, such as reorganizing the code into proper sections and defining new constants for strings used multiple times in the program.
