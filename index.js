@@ -161,32 +161,22 @@ function drawBricks() {
   }
 }
 
-// --------------------------------------------------------------
-// Game Loop
-// --------------------------------------------------------------
-
-function draw() {
-  // Clear the canvas to remove the previous drawing
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw the bricks, ball, and paddle and display the score and the number of lives remaining
-  drawBricks();
-  drawBall();
-  drawPaddle();
-  drawScore();
-  drawLives();
-
-  // Check for collisions between the ball and the bricks
-  collisionDetection();
-
-  // Give the ball horizontal and vertical movement
+// Keep the ball in motion by continuously adding dx and dy to the x and y positions, respectively
+function moveBall() {
   x += dx;
   y += dy;
+}
 
+// Check for collisions with the boundaries of Canvas to either redirect or decrement lives
+function collisionCanvas() {
   // Reverse direction of the ball if the edge of the ball hits any canvas boundaries
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
+}
+
+// Check for collisions between the ball and the paddle and returns Boolean value
+function collisionPaddle() {
   if (y + dy < ballRadius) {
     dy = -dy;
   } else if (y + dy > canvas.height - ballRadius) {
@@ -207,8 +197,10 @@ function draw() {
       }
     }
   }
+}
 
-  // Move the paddle by 7 pixels if left or right control engaged and stop at canvas boundaries
+// Detect key presses to move the paddle
+function checkKeys() {
   if (rightPressed) {
     paddleX += 7;
     if (paddleX + paddleWidth > canvas.width) {
@@ -220,6 +212,37 @@ function draw() {
       paddleX = 0;
     }
   }
+}
+
+// --------------------------------------------------------------
+// Game Loop
+// --------------------------------------------------------------
+
+function draw() {
+  // Clear the canvas to remove the previous drawing
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw the bricks, ball, and paddle and display the score and the number of lives remaining
+  drawBricks();
+  drawBall();
+  drawPaddle();
+  drawScore();
+  drawLives();
+
+  // Check for collisions between the ball and the bricks
+  collisionDetection();
+
+  // Give the ball horizontal and vertical movement
+  moveBall();
+
+  // Check for collisions of the ball with the edges of canvas
+  collisionCanvas();
+
+  // Check for collisions of the ball with the paddle
+  collisionPaddle();
+
+  // Move the paddle by 7 pixels if left or right control engaged and stop at canvas boundaries
+  checkKeys();
 
   // The browser will control the framerate to produce smooth and efficient effects
   requestAnimationFrame(draw);
