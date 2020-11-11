@@ -1,4 +1,12 @@
 // **************************************************************
+// Import class modules
+// **************************************************************
+// import Ball from './JS files/Ball';
+// import Brick from './JS files/Brick';
+// import GameLabel from './JS files/GameLabel';
+// import Bricks from './JS files/Bricks';
+
+// **************************************************************
 // DOM references
 // **************************************************************
 const canvas = document.getElementById('myCanvas');
@@ -128,6 +136,11 @@ function drawBall() {
   ctx.closePath();
 }
 
+function moveBall() {
+  x += dx;
+  y += dy;
+}
+
 // Draw the paddle as a rectangle
 function drawPaddle() {
   ctx.beginPath();
@@ -168,12 +181,6 @@ function drawBricks() {
       }
     }
   }
-}
-
-// Keep the ball in motion by continuously adding dx and dy to the x and y positions, respectively
-function moveBall() {
-  x += dx;
-  y += dy;
 }
 
 // Check for collisions with the boundaries of Canvas to either redirect or decrement lives

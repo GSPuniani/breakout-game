@@ -1,6 +1,6 @@
 // Sprite.js
 class Sprite {
-  constructor(x, y, width, height, color = 'red') {
+  constructor(x = 0, y = 0, width = 10, height = 10, color = 'red') {
     this.x = x;
     this.y = y;
     this.width = width;
