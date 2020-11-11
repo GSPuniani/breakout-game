@@ -1,5 +1,5 @@
 import Ball from './Ball';
-import Brick from './Brick';
+// import Brick from './Brick';
 import GameLabel from './GameLabel';
 import Bricks from './Bricks';
 import Sprite from './Sprite';
