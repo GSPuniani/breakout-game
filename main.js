@@ -191,7 +191,7 @@ function collisionCanvas() {
   }
 }
 
-// Check for collisions between the ball and the paddle and returns Boolean value
+// Check for collisions between the ball and the paddle
 function collisionPaddle() {
   if (y + dy < ballRadius) {
     dy = -dy;
