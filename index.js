@@ -137,6 +137,15 @@ function drawPaddle() {
   ctx.closePath();
 }
 
+// Reset the ball and the paddle to their original positions
+function resetBallAndPaddle() {
+  x = canvas.width / 2;
+  y = canvas.height - 30;
+  dx = 2;
+  dy = -2;
+  paddleX = (canvas.width - paddleWidth) / 2;
+}
+
 // Draw each brick as a rectangle by iterating through a 2-D array of their positions
 function drawBricks() {
   for (let c = 0; c < brickColumnCount; c += 1) {
@@ -189,11 +198,7 @@ function collisionPaddle() {
         alert('GAME OVER');
         document.location.reload();
       } else {
-        x = canvas.width / 2;
-        y = canvas.height - 30;
-        dx = 2;
-        dy = -2;
-        paddleX = (canvas.width - paddleWidth) / 2;
+        resetBallAndPaddle();
       }
     }
   }
