@@ -8,7 +8,7 @@ class Game {
   constructor(canvasID) {
     this.canvas = document.getElementById(canvasID);
     this.ctx = this.canvas.getContext('2d');
-
+    // console.log(this.ctx);
     // Define the radius of the ball for calculations
     this.ballRadius = 10;
 
@@ -188,7 +188,11 @@ class Game {
     // Move the paddle by 7 pixels if left or right control engaged and stop at canvas boundaries
     this.movePaddle();
     // The browser will control the framerate to produce smooth and efficient effects
-    requestAnimationFrame(this.draw);
+    // DOES NOT WORK: requestAnimationFrame(this.draw);
+    // requestAnimationFrame(this.draw.bind(this));
+    requestAnimationFrame(() => {
+      this.draw();
+    });
   }
 }
 
